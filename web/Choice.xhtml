@@ -8,14 +8,16 @@
     </h:head>
     <h:body>
         <h:form>
-            <h:selectOneMenu id="choice" value="#{choiceController.chosenType}">
-                <f:selectItem itemValue="1" value="TV/Movie"/>
-                <f:selectItem itemValue="2" value="Book/Comic"/>
-                <f:selectItem itemValue="3" value="Audio"/>
+            <h:selectOneMenu id="choice" value="#{choiceController.type}" immediate="true">
+                <f:selectItem itemValue="Video" itemLabel="Video"/>
+                <f:selectItem itemValue="Book" itemLabel="Book"/>
+                <f:selectItem itemValue="Audio" itemLabel="Audio"/>
             </h:selectOneMenu>
-            <h:commandLink action="index.html" value="Go To List">
-                <f:param name="list" value="#{choiceController.chosenType}"/>
+            <br/>
+            <h:commandLink action="#{choiceController.generate()}" value="Go To List">
+                <f:param name="type" value="#{choiceController.type}"/>
             </h:commandLink>
+            
         </h:form>
     </h:body>
 </html>

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -43,21 +44,17 @@ public class SelectorBacker {
     private String seriesToAdd;
     private String dateToAdd;
     private Series currSeries;
-    // 0 for Tv/Movie, 1 for Book/Comic, 2 for Audio
-    private int listType;
+    private String listType;
 
-    public int getListType() {
+    public String getListType() {
+        if (!(listType.equals("Video") || listType.equals("Book") || listType.equals("Audio"))) {
+            listType = "Video"; //default to video
+        }
         return listType;
     }
 
-    public void setListType(int listType) {
-        if (listType >= 3) {
-            this.listType = 2;
-        } else if (listType < 0) {
-            this.listType = 0;
-        } else {
-            this.listType = listType;
-        }
+    public void setListType(String listType) {
+        this.listType = listType;
     }
 
     public Series getCurrSeries() {
@@ -79,7 +76,7 @@ public class SelectorBacker {
         this.random = new Random();
         this.seriesToAdd = "";
         this.randSeries = "";
-        this.listType = 0;      //Defaults To 0
+        this.listType = "";
     }
 
     public boolean isRandSet() {

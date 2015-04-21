@@ -7,6 +7,7 @@ package Resources;
 
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedProperty;
 
 /**
  *
@@ -16,30 +17,24 @@ import javax.enterprise.context.RequestScoped;
 @RequestScoped
 public class ChoiceController {
 
-    // 0 for TV/Movie, 1 for Book/Comic, 2 for Audio
-    private int chosenType;
+    @ManagedProperty(value="#{param.type}")
+    private String type;
 
-    public int getChosenType() {
-        return chosenType;
+    public String getType() {
+        return type;
     }
 
-    public void setChosenType(String chosenType) {
-        switch (chosenType) {
-            case "TV/Movie": {
-                this.chosenType = 0;
-            }
-            case "Book/Comic": {
-                this.chosenType = 1;
-            }
-            case "Audio": {
-                this.chosenType = 2;
-            }
-            default: {
-                this.chosenType = 0;
-            }
-        }
+    public void setType(String type)
+    {
+        this.type = type;
     }
-
+    
+    public String generate()
+    {
+        String link = "index.xhtml?type=" + type + "&faces-redirect=true";
+        return link;
+    }
+    
     /**
      * Creates a new instance of ChoiceController
      */

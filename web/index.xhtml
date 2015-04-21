@@ -7,12 +7,13 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     
     <f:metadata>
-        <f:viewParam name="list"/>
+        <f:viewParam name="type" value="#{selectorBacker.listType}"/>
     </f:metadata>
     <h:head>
         <title>Random Selector</title>
     </h:head>
     <h:body>
+        <h:outputText value="#{selectorBacker.listType}"/>
         <ui:repeat id="list" var="series" value="#{selectorBacker.seriesList}">
             <div style="border: 1px solid black; padding-top: 5px; width: 425px; height: 25px;
                  padding-right: 10px; padding-left: 10px;">
@@ -49,13 +50,7 @@
                 <f:selectItem itemValue="5" itemLabel="Friday"/>
                 <f:selectItem itemValue="6" itemLabel="Saturday"/>
                 <f:selectItem itemValue="7" itemLabel="Sunday"/>
-                <f:selectItem itemValue="8" itemLabel="Finished Airing"/>
-            </h:selectOneMenu>
-            <h:outputText value="What type of "
-            <h:selectOneMenu id="serType" value="#{selectorBacker.currSeries.type}" required="true">
-                <f:selectItem itemValue="1" itemLabel="Television/Movie"/>
-                <f:selectItem itemValue="2" itemLabel="Book/Comic"/>
-                <f:selectItem itemValue="3" itemLabel="Audio"/>
+                <f:selectItem itemValue="8" itemLabel="Finished"/>
             </h:selectOneMenu>
             <br/>
             <h:commandButton value="Submit" action="#{selectorBacker.addSeries()}"/>
