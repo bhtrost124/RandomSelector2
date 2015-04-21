@@ -20,11 +20,11 @@ import javax.inject.Named;
 /**
  *
  * @author Bryce
- * 
+ *
  * This Application was designed for a user to keep track of shows that they are
  * watching, how far behind in that show they are, and in the event of not being
  * able to decide what to watch randomly selects one for them.
- * 
+ *
  * This backing bean is application scoped for the reason that I was the only
  * intended user, thus the series list can be considered as always being present
  * for the application. It was originally developed as request scoped, and it
@@ -41,6 +41,36 @@ public class SelectorBacker {
     private final Random random;
     private String randSeries;
     private String seriesToAdd;
+    private String dateToAdd;
+    private Series currSeries;
+    // 0 for Tv/Movie, 1 for Book/Comic, 2 for Audio
+    private int listType;
+
+    public int getListType() {
+        return listType;
+    }
+
+    public void setListType(int listType) {
+        if (listType >= 3) {
+            this.listType = 2;
+        } else if (listType < 0) {
+            this.listType = 0;
+        } else {
+            this.listType = listType;
+        }
+    }
+
+    public Series getCurrSeries() {
+        return currSeries;
+    }
+
+    public String getDateToAdd() {
+        return dateToAdd;
+    }
+
+    public void setDateToAdd(String dateToAdd) {
+        this.dateToAdd = dateToAdd;
+    }
 
     /**
      * Creates a new instance of SelectorBacker
@@ -49,6 +79,7 @@ public class SelectorBacker {
         this.random = new Random();
         this.seriesToAdd = "";
         this.randSeries = "";
+        this.listType = 0;      //Defaults To 0
     }
 
     public boolean isRandSet() {
@@ -65,9 +96,9 @@ public class SelectorBacker {
     }
 
     /*
-    Performs the logic to select a random series from the series list. Series that
-    are caught up on are not included in the selection.
-    */
+     Performs the logic to select a random series from the series list. Series that
+     are caught up on are not included in the selection.
+     */
     public void selectRandomSeries() {
         List<Series> randList = new ArrayList<>();
         for (Series s : this.serList) {
@@ -83,7 +114,7 @@ public class SelectorBacker {
     }
 
     public String addSeries() {
-        Series added = new Series(this.seriesToAdd);
+        Series added = new Series(this.seriesToAdd, this.dateToAdd);
         this.seriesBean.createSeries(added);
         this.serList = this.seriesBean.getAllSeries();
         this.seriesToAdd = "";

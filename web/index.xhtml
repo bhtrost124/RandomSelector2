@@ -3,16 +3,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <f:metadata>
+        <f:viewParam name="list"/>
+    </f:metadata>
     <h:head>
         <title>Random Selector</title>
     </h:head>
     <h:body>
-        <ui:repeat var="series" value="#{selectorBacker.seriesList}">
+        <ui:repeat id="list" var="series" value="#{selectorBacker.seriesList}">
             <div style="border: 1px solid black; padding-top: 5px; width: 425px; height: 25px;
                  padding-right: 10px; padding-left: 10px;">
                 <h:outputText  value="#{series.name} :  #{series.eps} behind"/>
-                <h:form style="display: inline; float: right;">
+                <h:form id="alter" style="display: inline; float: right;">
                     <h:commandButton value="+" action="#{selectorBacker.addEpsBehind(series)}"/>
                     <h:commandButton value="-" action="#{selectorBacker.decEpsBehind(series)}"/>
                     <h:commandButton value="Remove" action="#{selectorBacker.removeSeries(series)}"/>
@@ -20,7 +25,7 @@
                 <br/><br/>
             </div>
         </ui:repeat>
-        <h:form>
+        <h:form id="random">
             <br/>
             <h:outputText value="Press For A Random Series"/>
             <br/>
@@ -32,9 +37,26 @@
             </c:if>
             <br/>
         </h:form>
-        <h:form>
+        <h:form id="addSeries">
             <h:outputText value="Add Series: "/>
-            <h:inputText value="#{selectorBacker.seriesToAdd}"/>
+            <h:inputText id="serName" value="#{selectorBacker.currSeries.name}" required="true"/>
+            <h:outputText value="What day does the series update on: "/>
+            <h:selectOneMenu id="serDay" value="#{selectorBacker.currSeries.day}" required="true">
+                <f:selectItem itemValue="1" itemLabel="Monday"/>
+                <f:selectItem itemValue="2" itemLabel="Tuesday"/>
+                <f:selectItem itemValue="3" itemLabel="Wednesday"/>
+                <f:selectItem itemValue="4" itemLabel="Thursday"/>
+                <f:selectItem itemValue="5" itemLabel="Friday"/>
+                <f:selectItem itemValue="6" itemLabel="Saturday"/>
+                <f:selectItem itemValue="7" itemLabel="Sunday"/>
+                <f:selectItem itemValue="8" itemLabel="Finished Airing"/>
+            </h:selectOneMenu>
+            <h:outputText value="What type of "
+            <h:selectOneMenu id="serType" value="#{selectorBacker.currSeries.type}" required="true">
+                <f:selectItem itemValue="1" itemLabel="Television/Movie"/>
+                <f:selectItem itemValue="2" itemLabel="Book/Comic"/>
+                <f:selectItem itemValue="3" itemLabel="Audio"/>
+            </h:selectOneMenu>
             <br/>
             <h:commandButton value="Submit" action="#{selectorBacker.addSeries()}"/>
         </h:form>

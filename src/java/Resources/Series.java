@@ -20,18 +20,40 @@ public class Series implements Serializable {
     private int epsBehind;
     @Id
     private String seriesName;
+    private String airingDay;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+
+    public void setType(String type){
+        this.type = type;
+    }
 
     public Series()
     {
         this.epsBehind = 0;
     }
     
-    public Series(String name)
+    public Series(String name, String day)
     {
        this.seriesName = name;
        this.epsBehind = 0;
+       this.airingDay = day;
     }
 
+    public void setDay(String day)
+    {
+        this.airingDay = day;
+    }
+    
+    public String getDay()
+    {
+        return this.airingDay;
+    }
+    
     public int getEps()
     {
         return this.epsBehind;
