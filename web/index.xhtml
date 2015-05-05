@@ -15,13 +15,14 @@
     <h:body>
         <h:outputText value="#{selectorBacker.listType}"/>
         <ui:repeat id="list" var="series" value="#{selectorBacker.seriesList}">
-            <div style="border: 1px solid black; padding-top: 5px; width: 425px; height: 25px;
+            <div id="section" style="border: 1px solid black; padding-top: 5px; width: 425px; height: 25px;
                  padding-right: 10px; padding-left: 10px;">
                 <h:outputText  value="#{series.name} :  #{series.eps} behind"/>
                 <h:form id="alter" style="display: inline; float: right;">
                     <h:commandButton value="+" action="#{selectorBacker.addEpsBehind(series)}"/>
                     <h:commandButton value="-" action="#{selectorBacker.decEpsBehind(series)}"/>
                     <h:commandButton value="Remove" action="#{selectorBacker.removeSeries(series)}"/>
+                    <f:ajax event="action" render="section" execute="@form"/>
                 </h:form>
                 <br/><br/>
             </div>
